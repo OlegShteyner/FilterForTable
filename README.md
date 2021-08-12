@@ -1,4 +1,8 @@
-"# FilterForTable" 
+# FilterForTable
+
+Тестовый проект получения данных из JSON-файла и отображения их в виде иерархической таблицы с фильтрацием мультиселектом
+
+
 
 npm install browser-sync gulp --save-dev
 
