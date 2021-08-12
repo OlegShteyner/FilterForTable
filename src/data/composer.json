@@ -1,0 +1,66 @@
+﻿{
+	"categories": [
+		{
+			"categoryID": "1",
+			"categoryName": "Легковые автомобили",
+			"isDel": 0,
+			"subCategories": [
+        {
+          "categoryID": "3",
+          "categoryName": "с электрическим двигателем",
+          "isDel": 0,
+          "products": [
+            {
+              "productID": 1,
+              "productName": "Tesla",
+              "isDel": 0
+            }
+          ]
+        },
+        {
+          "categoryID": "4",
+          "categoryName": "с бензиновым двигателем",
+          "isDel": 0,
+          "products": [
+            {
+              "productID": 2,
+              "productName": "Audi",
+              "isDel": 0
+            }
+          ]
+        }
+			]
+		},
+		{
+			"categoryID": "2",
+			"categoryName": "Грузовые автомобили",
+			"isDel": 0,
+			"subCategories": [
+        {
+          "categoryID": "5",
+          "categoryName": "с дизельным двигателем",
+          "isDel": 0,
+          "products": [
+            {
+              "productID": 3,
+              "productName": "ГАЗ",
+              "isDel": 0
+            }
+          ]
+        },
+        {
+          "categoryID": "6",
+          "categoryName": "с бензиновым двигателем",
+          "isDel": 0,
+          "products": [
+            {
+              "productID": 4,
+              "productName": "ЗИЛ",
+              "isDel": 0
+            }
+          ]
+        }
+			]
+		}
+	]
+}

@@ -1,0 +1,91 @@
+<html>
+<head lang="ru" >
+<meta charset="utf-8" />
+    <title>Тестовое задание</title>
+    <link href="css/mainstyle.css" rel="stylesheet">    
+</head>
+<body>
+<table class="table maintable" style="width: 100%">
+    <thead>
+    <tr>
+        <td id ="curPlanName" style="font-size: large; text-align: left; vertical-align: middle;"><span>Категории: </span>
+          <select id="categoryChoose" multiple size="2" class="form-select form-select-lg" style="display: inline-block; width: 300px;"></select>
+        </td>
+    </tr>
+    </thead>
+</table>
+<table class="table maintable" style="width: 100%">
+    <thead>
+        <tr>
+            <th style="padding-left: 0px; vertical-align: top;">Категория</th>
+        </tr>
+        <tr>
+            <th style="padding-left: 80px; vertical-align: top;">Подкатегория</th>
+        </tr>
+        <tr>
+            <th style="padding-left: 120px; vertical-align: top;">Товар</th>
+        </tr>
+    </thead>
+    </thead>
+    <tbody id="mainTableBody"></tbody>
+</table>
+
+<!--строка таблицы категорий с заготовкой для строк подкатегорий-->
+<template id="mainTableRowTempl">
+    <tr style="text-align: left; padding: 0; width:100%;" id="categoryRow">
+        <td style="padding-left: 10px; padding-right: 10px; vertical-align: middle;">
+            <img id="viewSubCategory" src="imgs/plus.png" openSrc="imgs/plus.png" closeSrc="imgs/minus.png" alt="+" title="Отобразить подкатегории" style="cursor: pointer; margin-right: 5px;height: 15px;" isOpened="0">
+            <span id="categoryName"></span>
+        </td>
+    </tr>
+    <tr style="width:100%; display: none;" id="subCategories">
+        <td style="padding: 0px; padding-left: 40px; width:100%;">
+            <table class="table maintable" style="width:100%; padding: 0px; margin-bottom: 0;"><tbody id="subCategoriesBody"></tbody></table>
+        </td>
+    </tr>
+</template>
+
+<!--строка таблицы подкатегорий с заготовкой для строк товаров-->
+<template id="subCategirysRowTempl">
+  <tr style="width:100%;" id="subCategoriesRow">
+    <td style="padding-left: 10px; padding-right: 10px; vertical-align: middle;">
+        <img id="viewProducts" src="imgs/plus.png" openSrc="imgs/plus.png" closeSrc="imgs/minus.png" alt="+" title="Отобразить товары" style="cursor: pointer; margin-right: 5px;height: 15px;" isOpened="0">
+        <span id="subCategoryName"></span>
+    </td>
+  </tr>
+  <tr style="width:100%; display: none;" id="products">
+      <td style="padding: 0px; padding-left: 80px; width:100%;">
+          <table class="table maintable" style="width:100%; padding: 0px; margin-bottom: 0;"><tbody id="productsBody"></tbody></table>
+      </td>
+  </tr>
+</template>
+
+<!--строка таблицы товаров-->
+<template id="productsRowTempl">
+  <tr style="width:100%;" id="product">
+    <td style="padding-left: 10px; padding-right: 10px; vertical-align: middle;">
+        <span id="productName"></span>
+    </td>
+  </tr>
+</template>
+
+
+
+
+<!--анимация загрузки-->
+<template id="loaderIcon">
+<div id="сontentLoad"><img src="imgs/gaika.gif" alt="load.." style="width: 20px;"> Загрузка..</div>
+</template>
+
+<!--заглушка отсутствия данных-->
+<template id="DetailsListEmptyTpl">
+    <tr>
+        <td style="width: 100%; text-align: center;">
+            <div style="margin: 5px;">Отсутствуют данные</div>
+        </td>
+    </tr>
+</template>
+
+<script type="module" src="/scripts/main.js"></script>
+</body>
+</html>
