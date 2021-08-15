@@ -55,32 +55,20 @@ export class CatalogComposition extends ModelJS {
      * categoryName {string} наименование категории
      * @return {Promise<[CatalogComposition]>}
      */
-    static getModels(params) {
-        return new Promise((resolve, reject) => {
-           CatalogComposition.fetch('../../data/composer.json', {method: 'GET'})
-                .then(res => res.json())
-                .then(res => {
-                    let result = [];
-                    if (res.categories !== undefined && res.categories.length > 0) {
-                        for (let ii in res.categories) {
-                            result.push(new CatalogComposition(res.categories[ii]));
-                        }
-                        
-                        resolve(result);
-                    }
-                    else if (res.categories !== undefined && res.categories.length == 0) {
-                        resolve(result);
-                    } else if (res.state === 2) {
-                        reject(new Error(res.error));
-                    } else {
-                        reject(new Error('Неверный ответ от сервера'));
-                    }
-                })
-                .catch(e => {
-                    reject(e);
-                });
-
-        });
+    static async getModels(params) {
+        try {
+            const response = await fetch('../../data/composer.json', {method: 'GET'});
+            const fileData = await response.json();
+            if (fileData.categories !== undefined && fileData.categories.length > 0) {
+                return fileData.categories.reduce( (accumulator, current) => [ ...accumulator, new CatalogComposition(current)], []);
+            }
+            else{
+                return [];
+            }
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
     }
 
     /**

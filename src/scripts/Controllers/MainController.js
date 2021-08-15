@@ -50,7 +50,7 @@ export class MainController {
      * @param {array} selectedArr - массив отобранных категорий
      */
     showSelectCategories(selectedArr){
-        this._view.renderMainTable(this._catalogData.filter(a => selectedArr.some(t => t.ID == a.ID)));
+        this._view.renderMainTable(this._catalogData.filter(source => selectedArr.some(selected => selected.ID == source.ID)));
     }
 
 }

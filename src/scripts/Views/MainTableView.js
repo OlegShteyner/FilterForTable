@@ -9,10 +9,13 @@ export class MainTableView {
         let sel = document.getElementById('categoryChoose'), selOpt = sel.options;
         sel.addEventListener('change', e=>{
             let opts = [];
+            let selOpt = document.getElementById('categoryChoose').options;
+
             for (let i = 0; i < selOpt.length; i++) {
                 if (selOpt[i].selected)
                     opts.push({"ID": parseInt(selOpt[i].value)});
             }
+
             chooseCategoryClb(opts);
         });
         if(selOpt.length == 0) {
@@ -32,10 +35,11 @@ export class MainTableView {
      * @param {<Array<SubCategoryComposition>>} catList список категорий
      */
     selectCategoriesFill(catList){
-        let sel = document.getElementById('categoryChoose');
-        for (let i = 0; i < catList.length; i++) {
-            sel.append(new Option(catList[i].Name, catList[i].ID));
-        }
+        if(!catList)
+            return;
+        const categoriesChooseSelect = document.getElementById('categoryChoose');
+        const categoriesOptions = catList.reduce( (accumulator, current) => [ ...accumulator, new Option(current.Name, current.ID)], []);
+        categoriesChooseSelect.append(...categoriesOptions);
     }
 
     /**
@@ -61,11 +65,11 @@ export class MainTableView {
     renderTableRow(rowData){
         let tpl = document.getElementById('mainTableRowTempl').content.cloneNode(true);
 
-        tpl.querySelector('#categoryRow').id += '_' + rowData.ID;
-        tpl.querySelector('#viewSubCategory').id += '_' + rowData.ID;
-        tpl.querySelector('#categoryName').id += '_' + rowData.ID;
-        tpl.querySelector('#subCategories').id += '_' + rowData.ID;
-        tpl.querySelector('#subCategoriesBody').id += '_' + rowData.ID;
+        tpl.querySelector('#categoryRow').id += `_${rowData.ID}`;
+        tpl.querySelector('#viewSubCategory').id += `_${rowData.ID}`;
+        tpl.querySelector('#categoryName').id += `_${rowData.ID}`;
+        tpl.querySelector('#subCategories').id += `_${rowData.ID}`;
+        tpl.querySelector('#subCategoriesBody').id += `_${rowData.ID}`;
         tpl.querySelector('[id^=categoryName]').innerText = rowData.Name;
 
         //реакция на разворот дерева подкатегорий
@@ -73,26 +77,26 @@ export class MainTableView {
             if(e.target.getAttribute('isOpened') == 1){
                 e.target.setAttribute('isOpened',0);
                 e.target.src = e.target.getAttribute('openSrc');
-                MainTableView.clearChild('subCategoriesBody_'+rowData.ID);
-                document.getElementById('subCategories_'+rowData.ID).style.display = 'none';
-                document.getElementById('subCategoriesBody_'+rowData.ID).style.display = 'none';
+                MainTableView.clearChild(`subCategoriesBody_${rowData.ID}`);
+                document.getElementById(`subCategories_${rowData.ID}`).style.display = 'none';
+                document.getElementById(`subCategoriesBody_${rowData.ID}`).style.display = 'none';
             }
             else{
                 e.target.src = e.target.getAttribute('closeSrc');
                 e.target.setAttribute('isOpened',1);
-                document.getElementById('subCategories_'+rowData.ID).style.display = 'table-row';
-                document.getElementById('subCategoriesBody_'+rowData.ID).style.display = 'table-row';
+                document.getElementById(`subCategories_${rowData.ID}`).style.display = 'table-row';
+                document.getElementById(`subCategoriesBody_${rowData.ID}`).style.display = 'table-row';
                 rowData.getSubCategories()
                     .then(subCategoriesList=>{
                         if (subCategoriesList.length)
-                            this._toAppendElement('subCategoriesBody_'+rowData.ID, this.renderSubCategoriesList(subCategoriesList));
+                            this._toAppendElement(`subCategoriesBody_${rowData.ID}`, this.renderSubCategoriesList(subCategoriesList));
                         else{
-                            MainTableView.clearChild('subCategoriesBody_'+rowData.ID);
+                            MainTableView.clearChild(`subCategoriesBody_${rowData.ID}`);
                             console.error(new Error('У категории ожидаются подкатегории, а их нет'));
                         }
                     })
                     .catch(e=>{
-                        MainTableView.clearChild('subCategoriesBody_'+rowData.ID);
+                        MainTableView.clearChild(`subCategoriesBody_${rowData.ID}`);
                         throw e;
                     });
 
@@ -127,39 +131,39 @@ export class MainTableView {
     renderSubCategoriesRow(subCategory){
         let tpl = document.getElementById('subCategirysRowTempl').content.cloneNode(true);
 
-        tpl.querySelector('#subCategoriesRow').id += '_' + subCategory.ID;
-        tpl.querySelector('#viewProducts').id += '_' + subCategory.ID;
-        tpl.querySelector('#subCategoryName').id += '_' + subCategory.ID;
-        tpl.querySelector('#products').id += '_' + subCategory.ID;
-        tpl.querySelector('#productsBody').id += '_' + subCategory.ID;
+        tpl.querySelector('#subCategoriesRow').id += `_${subCategory.ID}`;
+        tpl.querySelector('#viewProducts').id += `_${subCategory.ID}`;
+        tpl.querySelector('#subCategoryName').id += `_${subCategory.ID}`;
+        tpl.querySelector('#products').id += `_${subCategory.ID}`;
+        tpl.querySelector('#productsBody').id += `_${subCategory.ID}`;
         tpl.querySelector('[id^=subCategoryName]').innerText = subCategory.Name;
 
         //реакция на разворот дерева товаров
-        tpl.getElementById('viewProducts_' + subCategory.ID).addEventListener('click', e => {
+        tpl.getElementById(`viewProducts_${subCategory.ID}`).addEventListener('click', e => {
             if(e.target.getAttribute('isOpened') == 1){
                 e.target.setAttribute('isOpened',0);
                 e.target.src = e.target.getAttribute('openSrc');
-                MainTableView.clearChild('productsBodyy_'+subCategory.ID);
-                document.getElementById('productsBody_'+subCategory.ID).style.display = 'none';
-                document.getElementById('products_'+subCategory.ID).style.display = 'none';
+                MainTableView.clearChild(`productsBody_${subCategory.ID}`);
+                document.getElementById(`productsBody_${subCategory.ID}`).style.display = 'none';
+                document.getElementById(`products_${subCategory.ID}`).style.display = 'none';
             }
             else{
                 e.target.src = e.target.getAttribute('closeSrc');
                 e.target.setAttribute('isOpened',1);
-                document.getElementById('products_'+subCategory.ID).style.display = 'table-row';
-                document.getElementById('productsBody_'+subCategory.ID).style.display = 'table-row';
+                document.getElementById(`products_${subCategory.ID}`).style.display = 'table-row';
+                document.getElementById(`productsBody_${subCategory.ID}`).style.display = 'table-row';
 
                 subCategory.getProducts()
                     .then(productsList=>{
                         if (productsList.length)
-                            this._toAppendElement('productsBody_'+subCategory.ID, this.renderProductsList(productsList));
+                            this._toAppendElement(`productsBody_${subCategory.ID}`, this.renderProductsList(productsList));
                         else{
-                            MainTableView.clearChild('productsBody_'+subCategory.ID);
+                            MainTableView.clearChild(`productsBody_${subCategory.ID}`);
                             console.error(new Error('У подкатегории ожидаются товары, а их нет'));
                         }
                     })
                     .catch(e=>{
-                        MainTableView.clearChild('productsBody_'+subCategory.ID);
+                        MainTableView.clearChild(`productsBody_${subCategory.ID}`);
                         throw e;
                     });
             }
@@ -191,8 +195,8 @@ export class MainTableView {
      */
     renderProductRow(product){
         let tpl = document.getElementById('productsRowTempl').content.cloneNode(true);
-        tpl.querySelector('#product').id += '_' + product.ID;
-        tpl.querySelector('#productName').id += '_' + product.ID;
+        tpl.querySelector('#product').id += `_${product.ID}`;
+        tpl.querySelector('#productName').id += `_${product.ID}`;
         tpl.querySelector('[id^=productName]').innerText = product.Name;
 
         return tpl;
