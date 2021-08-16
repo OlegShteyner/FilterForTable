@@ -1,7 +1,7 @@
 {
   "name": "filterTable",
   "version": "1.0.0",
-  "description": "",
+  "description": "Catalogue table filter",
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp",
@@ -9,7 +9,7 @@
     "serve": "gulp serve",
   },
   "keywords": [],
-  "author": "",
+  "author": "Shteyner Oleg",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.27.5",
